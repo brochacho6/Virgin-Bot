@@ -51,15 +51,30 @@ async def ping(ctx):
     await ctx.send(f'Pong! 🏓 {round(client.latency * 1000)}ms')
 
 
-# ping command
+@client.command(brief= 'Goes beast mode')
+async def brownpill(ctx):
+    await ctx.send(f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you on the oldest anarchy server in minecraft history!")
+
+
 
 @client.command(brief = "Checks the Bot's statistics")
-async def botstats(ctx):
-    pythonVersion = platform.python.version()
+async def stats(ctx):
+    pythonVersion = platform.python_version()
     dpyVersion = discord.__version__
     serverCount = len(client.guilds)
     memberCount = len(set(client.get_all_members()))
     await ctx.send(f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
+
+@client.command(aliases = ['quit', 'eject'], brief = "Makes it so the bot cant run commands until its rebooted (admin only)")
+@commands.has_permissions(administrator=True)
+async def logout(ctx):
+    await ctx.send(f'Hey {ctx.author.mention}, I am now logging out :wave:')
+    await client.logout()
+
+@logout.error
+async def logout_error(ctx, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send("Hey, you cant do that >:(")
 
 
 @client.command(aliases=['8ball'], brief='Ask the 8ball a question!',
