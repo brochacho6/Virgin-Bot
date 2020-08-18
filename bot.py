@@ -80,7 +80,7 @@ async def logout_error(ctx, error):
         await ctx.send("Hey, you cant do that >:(")
 
 
-@client.command()
+@client.command(brief='holy.')
 async def pvg(ctx):
     virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
                 "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
@@ -142,7 +142,7 @@ async def _8ball(ctx, *, question):
 
 # 8ball command
 
-@client.command(brief='Kicks a member that is mentioned')
+@client.command(brief='Kicks a member that is mentioned (admin only)')
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
@@ -150,7 +150,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 
 # kick command
 
-@client.command(brief='Bans the user that is mentioned', category='Moderation')
+@client.command(brief='Bans the user that is mentioned (admin only)', category='Moderation')
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
@@ -158,4 +158,6 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 
 
 
-client.run('NzQ1MzIyOTM4MTAxNzkyOTAx.XzwGEw.xKauE9JYoJpvObXOUKD4rjJBJzk')
+
+
+client.run('TOKEN')
