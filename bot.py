@@ -1,10 +1,10 @@
 import random
 import platform
 import discord
-import json
 import os
-from discord.ext import commands
 import asyncio
+from discord.ext import commands
+from discord.utils import get
 
 client = commands.Bot(command_prefix='$', case_insensitive=True)
 
@@ -36,9 +36,9 @@ async def clear(ctx, amount: int):
     nuke = discord.Embed(
         colour=discord.Colour.green()
     )
-    nuke.set_author(name=f'{amount} messages deleted', icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    nuke.set_author(name=f'{amount} messages deleted',
+                    icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
     await ctx.send(embed=nuke)
-
 
 
 @clear.error
@@ -47,8 +47,10 @@ async def clear_error(ctx, error):
         nukeError = discord.Embed(
             colour=discord.Colour.red()
         )
-        nukeError.set_author(name='Please specify an amount of messages to delete.', icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+        nukeError.set_author(name='Please specify an amount of messages to delete.',
+                             icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
         await ctx.send(embed=nukeError)
+
 
 @client.event
 async def on_command_error(ctx, error):
@@ -62,8 +64,10 @@ async def ping(ctx):
     pingEmbed = discord.Embed(
         colour=discord.Colour.red()
     )
-    pingEmbed.set_author(name=f'Pong! 🏓 {round(client.latency * 1000)}ms', icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    pingEmbed.set_author(name=f'Pong! 🏓 {round(client.latency * 1000)}ms',
+                         icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
     await ctx.send(embed=pingEmbed)
+
 
 @client.command()
 async def brownpill(ctx):
@@ -83,11 +87,12 @@ async def stats(ctx):
     dpyVersion = discord.__version__
     serverCount = len(client.guilds)
     memberCount = len(set(client.get_all_members()))
-    await ctx.send(f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
+    await ctx.send(
+        f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
 
 
 @client.command(aliases=['quit', 'eject'])
-@commands.has_permissions(administrator=True)
+@commands.is_owner()
 async def logout(ctx):
     await ctx.send(f'Hey {ctx.author.mention}, I am now logging out :wave:')
     await client.logout()
@@ -113,6 +118,7 @@ async def pvg(ctx):
                  "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",
                  "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1", ]
     await ctx.send(f"{random.choice(virginity)}")
+
 
 
 @client.command(aliases=['8ball'])
@@ -162,6 +168,7 @@ async def _8ball(ctx, *, question):
     _8ballEmbed.set_author(name=f'Question: {question}\nAnswer: {random.choice(responses)}')
     await ctx.send(embed=_8ballEmbed)
 
+
 # 8ball command
 
 @client.command()
@@ -173,10 +180,11 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 # kick command
 
 @client.command()
-@commands.has_permissions(ban_members=True)
+@commands.has_permissions(administrator=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'Banned {member.mention}')
+
 
 @client.command()
 async def unban(ctx, *, member):
@@ -193,8 +201,6 @@ async def unban(ctx, *, member):
 
 
 
-
-
 client.remove_command('help')
 
 
@@ -202,22 +208,52 @@ client.remove_command('help')
 async def help(ctx):
     embed = discord.Embed(
         colour=discord.Colour.red(),
-        title="Help Command",
+        title="Commands",
         description="Displays the purpose of commands."
     )
 
-    embed.set_author(name="Powered by Virgin Bot™", icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    embed.set_author(name="Powered by Virgin Bot™",
+                     icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
     embed.add_field(name="Prefix", value="The prefix for this bot is **$**.", inline=False)
-    embed.add_field(name= "8ball", value="Ask the 8Ball a question!\nUsage: $8ball [question]", inline=False )
+    embed.add_field(name="8ball", value="Ask the 8Ball a question!\nUsage: $8ball [question]", inline=False)
     embed.add_field(name="brownpill", value="Goes Beast-Mode.", inline=False)
     embed.add_field(name="clout", value="Emperor for President 2020.", inline=False)
     embed.add_field(name="ping", value="Checks Bot's ping.", inline=False)
     embed.add_field(name="pvg", value="Holy.", inline=False)
     embed.add_field(name="stats", value="Checks the Bot's Statistics.")
-    embed.set_footer(text="Bot Created by brochacho6#4023.",icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
-
+    embed.set_footer(text="Bot Created by brochacho6#4023.",
+                     icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
 
     await ctx.send(embed=embed)
+
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def modHelp(ctx):
+    modHelpEmb = discord.Embed(
+        colour=discord.Colour.orange(),
+        title="⚠️ Staff Commands ⚠️",
+        description="Displays the purpose of Mod-Only commands."
+    )
+
+    modHelpEmb.set_author(name="Powered by Virgin Bot™",
+                          icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    modHelpEmb.set_thumbnail(
+        url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+    modHelpEmb.add_field(name="echo", value="Makes the bot say anything you want.\nUsage: `$echo [message]`",
+                         inline=False)
+    modHelpEmb.add_field(name="kick", value="Kicks mentioned user.\nUsage: `$kick @example`", inline=False)
+    modHelpEmb.add_field(name="ban", value="Bans mentioned user.\nUsage: `$ban @example`", inline=False)
+    modHelpEmb.add_field(name="unban", value="Unbans user.\nUsage: `$unban example#1234`", inline=False)
+    modHelpEmb.add_field(name="logout",
+                         value="Shuts bot down and commands will only become usable again upon a manual restart of the bot.\n⚠️ This command can only be ran by brochacho6. ⚠️",
+                         inline=False)
+    modHelpEmb.set_footer(text="Bot Created by brochacho6#4023.",
+                     icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+
+    await ctx.send(embed=modHelpEmb)
+
+
 client.run('NzQ1NDEwMjk5OTgwNDE1MDI2.XzxXcA.NKasQBtJZL5gor_E0cFDEGHj8Dw')
