@@ -15,7 +15,7 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Game(name='Virgin and Proud!'))
 
 
-@client.command(brief='Echoes a message (admin only)')
+@client.command()
 @commands.has_permissions(administrator=True)
 async def echo(ctx, *, message=None):
     message = message or "Please provide message to be echo'd"
@@ -25,20 +25,30 @@ async def echo(ctx, *, message=None):
 
 @client.event
 async def on_member_join(member):
-    await member.send("Welcome to the Server!")
+    await member.send(f"Welcome to the Server {member}!")
 
 
-@client.command(aliases=['nuke', 'purge'], brief='Clears a certain ammount of messages (admin only)')
+@client.command(aliases=['nuke', 'purge'])
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount + 1)
+
+    nuke = discord.Embed(
+        colour=discord.Colour.green()
+    )
+    nuke.set_author(name=f'{amount} messages deleted', icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    await ctx.send(embed=nuke)
+
 
 
 @clear.error
 async def clear_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please specify an amount of messages to delete.')
-
+        nukeError = discord.Embed(
+            colour=discord.Colour.red()
+        )
+        nukeError.set_author(name='Please specify an amount of messages to delete.', icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+        await ctx.send(embed=nukeError)
 
 @client.event
 async def on_command_error(ctx, error):
@@ -47,35 +57,36 @@ async def on_command_error(ctx, error):
 
 # chat purge command
 
-@client.command(brief="Checks the Bot's Ping", description="Checks the Bot's Ping")
+@client.command()
 async def ping(ctx):
-    await ctx.send(f'Pong! 🏓 {round(client.latency * 1000)}ms')
+    pingEmbed = discord.Embed(
+        colour=discord.Colour.red()
+    )
+    pingEmbed.set_author(name=f'Pong! 🏓 {round(client.latency * 1000)}ms', icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    await ctx.send(embed=pingEmbed)
 
-
-@client.command(brief='Goes beast mode')
+@client.command()
 async def brownpill(ctx):
     await ctx.send(
         f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you on the oldest anarchy server in minecraft history!")
 
 
-@client.command(brief="clout")
+@client.command()
 async def clout(ctx):
     await ctx.send(
         f"DO YOU HAVE ANY IDEA OF HOW MUCH CLOUT I HAVE? HOW MUCH RELEVANCE FLOWS THROUGH MY VETERAN VEINS? YOU CANT POSSIBLY DENY ME!")
 
 
-@client.command(brief="Checks the Bot's statistics")
+@client.command()
 async def stats(ctx):
     pythonVersion = platform.python_version()
     dpyVersion = discord.__version__
     serverCount = len(client.guilds)
     memberCount = len(set(client.get_all_members()))
-    await ctx.send(
-        f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
+    await ctx.send(f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
 
 
-@client.command(aliases=['quit', 'eject'],
-                brief="Makes it so the bot cant run commands until its rebooted (admin only)")
+@client.command(aliases=['quit', 'eject'])
 @commands.has_permissions(administrator=True)
 async def logout(ctx):
     await ctx.send(f'Hey {ctx.author.mention}, I am now logging out :wave:')
@@ -88,7 +99,7 @@ async def logout_error(ctx, error):
         await ctx.send("Hey, you cant do that >:(")
 
 
-@client.command(brief='holy.')
+@client.command()
 async def pvg(ctx):
     virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
                  "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
@@ -104,8 +115,7 @@ async def pvg(ctx):
     await ctx.send(f"{random.choice(virginity)}")
 
 
-@client.command(aliases=['8ball'], brief='Ask the 8ball a question!',
-                description='Ask the 8ball anything and it will randomize 1 out of 20 possible responses.')
+@client.command(aliases=['8ball'])
 async def _8ball(ctx, *, question):
     responses = ["It is certain.",
 
@@ -146,12 +156,15 @@ async def _8ball(ctx, *, question):
                  "Outlook not so good.",
 
                  "Very doubtful."]
-    await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
-
+    _8ballEmbed = discord.Embed(
+        colour=discord.Colour.red()
+    )
+    _8ballEmbed.set_author(name=f'Question: {question}\nAnswer: {random.choice(responses)}')
+    await ctx.send(embed=_8ballEmbed)
 
 # 8ball command
 
-@client.command(brief='Kicks a member that is mentioned (admin only)')
+@client.command()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
@@ -159,11 +172,25 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 
 # kick command
 
-@client.command(brief='Bans the user that is mentioned (admin only)', category='Moderation')
+@client.command()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'Banned {member.mention}')
+
+@client.command()
+async def unban(ctx, *, member):
+    banned_users = await ctx.guild.bans()
+    member_name, member_discriminator = member.split('#')
+
+    for ban_entry in banned_users:
+        user = ban_entry.user
+
+        if (user.name, user.discriminator) == (member_name, member_discriminator):
+            await ctx.guild.unban(user)
+            await ctx.send(f'Unbanned {user.mention}')
+            return
+
 
 
 
