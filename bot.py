@@ -4,6 +4,7 @@ import discord
 import json
 import os
 from discord.ext import commands
+import asyncio
 
 client = commands.Bot(command_prefix='$', case_insensitive=True)
 
@@ -11,10 +12,10 @@ client = commands.Bot(command_prefix='$', case_insensitive=True)
 @client.event
 async def on_ready():
     print('Bot is Online!')
-    await client.change_presence(status=discord.Status.idle, activity=discord.Game(name='Virgin and Proud!'))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game(name='Virgin and Proud!'))
 
 
-@client.command(brief = 'Echoes a message (admin only)')
+@client.command(brief='Echoes a message (admin only)')
 @commands.has_permissions(administrator=True)
 async def echo(ctx, *, message=None):
     message = message or "Please provide message to be echo'd"
@@ -51,28 +52,35 @@ async def ping(ctx):
     await ctx.send(f'Pong! 🏓 {round(client.latency * 1000)}ms')
 
 
-@client.command(brief= 'Goes beast mode')
+@client.command(brief='Goes beast mode')
 async def brownpill(ctx):
-    await ctx.send(f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you on the oldest anarchy server in minecraft history!")
+    await ctx.send(
+        f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you on the oldest anarchy server in minecraft history!")
 
-@client.command(brief = "clout")
+
+@client.command(brief="clout")
 async def clout(ctx):
-    await ctx.send(f"DO YOU HAVE ANY IDEA OF HOW MUCH CLOUT I HAVE? HOW MUCH RELEVANCE FLOWS THROUGH MY VETERAN VEINS? YOU CANT POSSIBLY DENY ME!")
+    await ctx.send(
+        f"DO YOU HAVE ANY IDEA OF HOW MUCH CLOUT I HAVE? HOW MUCH RELEVANCE FLOWS THROUGH MY VETERAN VEINS? YOU CANT POSSIBLY DENY ME!")
 
 
-@client.command(brief = "Checks the Bot's statistics")
+@client.command(brief="Checks the Bot's statistics")
 async def stats(ctx):
     pythonVersion = platform.python_version()
     dpyVersion = discord.__version__
     serverCount = len(client.guilds)
     memberCount = len(set(client.get_all_members()))
-    await ctx.send(f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
+    await ctx.send(
+        f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
 
-@client.command(aliases = ['quit', 'eject'], brief = "Makes it so the bot cant run commands until its rebooted (admin only)")
+
+@client.command(aliases=['quit', 'eject'],
+                brief="Makes it so the bot cant run commands until its rebooted (admin only)")
 @commands.has_permissions(administrator=True)
 async def logout(ctx):
     await ctx.send(f'Hey {ctx.author.mention}, I am now logging out :wave:')
     await client.logout()
+
 
 @logout.error
 async def logout_error(ctx, error):
@@ -83,20 +91,21 @@ async def logout_error(ctx, error):
 @client.command(brief='holy.')
 async def pvg(ctx):
     virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
-                "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
-                "https://cdn.discordapp.com/emojis/737935384297734194.png?v=1",
-                "https://cdn.discordapp.com/emojis/698308907910562001.png?v=1",
-                "https://cdn.discordapp.com/emojis/686212562022301734.png?v=1",
-                "https://cdn.discordapp.com/emojis/697939921557782579.png?v=1",
-                "https://cdn.discordapp.com/emojis/737935217255514193.png?v=1",
-                "https://cdn.discordapp.com/emojis/738510553428787262.png?v=1",
-                "https://cdn.discordapp.com/emojis/737935704642027521.png?v=1",
-                "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",
-                "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",]
+                 "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
+                 "https://cdn.discordapp.com/emojis/737935384297734194.png?v=1",
+                 "https://cdn.discordapp.com/emojis/698308907910562001.png?v=1",
+                 "https://cdn.discordapp.com/emojis/686212562022301734.png?v=1",
+                 "https://cdn.discordapp.com/emojis/697939921557782579.png?v=1",
+                 "https://cdn.discordapp.com/emojis/737935217255514193.png?v=1",
+                 "https://cdn.discordapp.com/emojis/738510553428787262.png?v=1",
+                 "https://cdn.discordapp.com/emojis/737935704642027521.png?v=1",
+                 "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",
+                 "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1", ]
     await ctx.send(f"{random.choice(virginity)}")
 
 
-@client.command(aliases=['8ball'], brief='Ask the 8ball a question!',description='Ask the 8ball anything and it will randomize 1 out of 20 possible responses.')
+@client.command(aliases=['8ball'], brief='Ask the 8ball a question!',
+                description='Ask the 8ball anything and it will randomize 1 out of 20 possible responses.')
 async def _8ball(ctx, *, question):
     responses = ["It is certain.",
 
@@ -159,5 +168,29 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 
 
 
+client.remove_command('help')
 
-client.run('NzQ0Nzc2MzIxOTIxNzEyMjA5.XzoJAA.FhVsQ37NKNLtZct_OmunYUIVag0')
+
+@client.command()
+async def help(ctx):
+    embed = discord.Embed(
+        colour=discord.Colour.red(),
+        title="Help Command",
+        description="Displays the purpose of commands."
+    )
+
+    embed.set_author(name="Powered by Virgin Bot™", icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    embed.set_thumbnail(
+        url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+    embed.add_field(name="Prefix", value="The prefix for this bot is **$**.", inline=False)
+    embed.add_field(name= "8ball", value="Ask the 8Ball a question!\nUsage: $8ball [question]", inline=False )
+    embed.add_field(name="brownpill", value="Goes Beast-Mode.", inline=False)
+    embed.add_field(name="clout", value="Emperor for President 2020.", inline=False)
+    embed.add_field(name="ping", value="Checks Bot's ping.", inline=False)
+    embed.add_field(name="pvg", value="Holy.", inline=False)
+    embed.add_field(name="stats", value="Checks the Bot's Statistics.")
+    embed.set_footer(text="Bot Created by brochacho6#4023.",icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+
+
+    await ctx.send(embed=embed)
+client.run('NzQ1NDEwMjk5OTgwNDE1MDI2.XzxXcA.NKasQBtJZL5gor_E0cFDEGHj8Dw')
