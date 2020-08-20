@@ -1,10 +1,5 @@
 import random
-import platform
-import discord
-import os
-import asyncio
 from discord.ext import commands
-from discord.utils import get
 
 
 class _2b2tMemeCommands(commands.Cog):
@@ -14,12 +9,16 @@ class _2b2tMemeCommands(commands.Cog):
     @commands.command()
     async def brownpill(self, ctx):
         await ctx.send(
-            f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you on the oldest anarchy server in minecraft history!")
+            f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined "
+            f"2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, "
+            f"but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you "
+            f"on the oldest anarchy server in minecraft history!")
 
     @commands.command()
     async def clout(self, ctx):
         await ctx.send(
-            f"DO YOU HAVE ANY IDEA OF HOW MUCH CLOUT I HAVE? HOW MUCH RELEVANCE FLOWS THROUGH MY VETERAN VEINS? YOU CANT POSSIBLY DENY ME!")
+            f"DO YOU HAVE ANY IDEA OF HOW MUCH CLOUT I HAVE? HOW MUCH RELEVANCE FLOWS THROUGH MY VETERAN VEINS? YOU "
+            f"CANT POSSIBLY DENY ME!")
 
     @commands.command()
     async def pvg(self, ctx):
