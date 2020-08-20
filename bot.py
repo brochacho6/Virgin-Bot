@@ -31,13 +31,9 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
+# cog commands
 
-@client.command()
-@commands.has_permissions(administrator=True)
-async def echo(ctx, *, message=None):
-    message = message or "Please provide message to be echo'd"
-    await ctx.message.delete()
-    await ctx.send(message)
+
 
 
 @client.event
@@ -175,8 +171,6 @@ async def _8ball(ctx, *, question):
 # 8ball command
 
 client.remove_command('help')
-
-
 @client.command()
 async def help(ctx):
     embed = discord.Embed(

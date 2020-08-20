@@ -1,10 +1,6 @@
-import random
-import platform
 import discord
-import os
-import asyncio
 from discord.ext import commands
-from discord.utils import get
+
 
 
 class Moderation(commands.Cog):
@@ -56,6 +52,14 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
+    async def echo(self, ctx, *, message=None):
+        message = message or "Please provide message to be echo'd"
+        await ctx.message.delete()
+        await ctx.send(message)
+    # echo command
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
     async def modHelp(self, ctx):
         modHelpEmb = discord.Embed(
             colour=discord.Colour.orange(),
@@ -80,7 +84,7 @@ class Moderation(commands.Cog):
                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
 
         await ctx.send(embed=modHelpEmb)
-
+    # mod help command
 
 
 def setup(client):
