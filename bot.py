@@ -21,8 +21,8 @@ async def on_ready():
     print(f'Logged in as: {client.user.name} : {client.user.id}')
     await client.change_presence(status=discord.Status.online, activity=discord.Game(name='Virgin and Proud!'))
 
-blacklist = {421444514343944203}
 
+blacklist = {421444514343944203}
 
 client.blacklisted_users = []
 
@@ -70,7 +70,10 @@ async def stats(ctx):
     await ctx.send(
         f"Bot Stats:\nI'm in **{serverCount}** servers with a total of **{memberCount}** members.\nI'm running Python **{pythonVersion}** and discord.py **{dpyVersion}**.")
 
+
 client.remove_command('help')
+
+
 
 @client.command()
 async def help(ctx):
@@ -94,7 +97,6 @@ async def help(ctx):
     embed.add_field(name="stats", value="Checks the Bot's Statistics.")
     embed.set_footer(text="Bot Created by brochacho6#4023.",
                      icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
-
 
     await ctx.send(embed=embed)
 
