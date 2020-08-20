@@ -1,16 +1,30 @@
+import cogs as cogs
 import discord
 from discord.ext import commands
+import platform
 
 
 class Moderation(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("Moderation Cog has been loaded")
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason=None):
         await member.ban(reason=reason)
         await ctx.send(f'Banned {member.mention}')
+
+        channel = self.client.get_channel(745893964175114260)
+        embed = discord.Embed(
+            title=f"{ctx.author.name} banned: {member.name}",
+            description=reason
+        )
+        await channel.send(embed=embed)
+        print(f"{ctx.author.name} banned: {member.name}")
 
     # ban command
 
@@ -26,15 +40,30 @@ class Moderation(commands.Cog):
             if (user.name, user.discriminator) == (member_name, member_discriminator):
                 await ctx.guild.unban(user)
                 await ctx.send(f'{user.mention} has been unbanned.')
+
+                channel = self.client.get_channel(745893964175114260)
+                embed = discord.Embed(
+                    title=f"{ctx.author.name} unbanned: {member.name}",
+                )
+                await channel.send(embed=embed)
+                print(f"{ctx.author.name} unbanned: {member.name}")
                 return
 
     # unban command
 
     @commands.command()
-    @commands.has_permissions(kick_members=True)
+    @commands.guild_only()
+    @commands.has_guild_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason=None):
-        await member.kick(reason=reason)
-        await ctx.send(f"{member.mention} has been kicked from the server.")
+        await ctx.guild.kick(user=member, reason=reason)
+
+        channel = self.client.get_channel(745893964175114260)
+        embed = discord.Embed(
+            title=f"{ctx.author.name} kicked: {member.name}",
+            description=reason
+        )
+        await channel.send(embed=embed)
+        print(f"{ctx.author.name} kicked: {member.name}")
 
     # kick command
 
@@ -88,6 +117,8 @@ class Moderation(commands.Cog):
 
     # clear command
 
+
+
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def modHelp(self, ctx):
@@ -96,9 +127,6 @@ class Moderation(commands.Cog):
             title="⚠️ Staff Commands ⚠️",
             description="Displays the purpose of Mod-Only commands."
         )
-
-
-
 
         modHelpEmb.set_author(name="Powered by Virgin Bot™",
                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")

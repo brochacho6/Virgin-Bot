@@ -3,13 +3,21 @@ import random
 import discord
 from discord.ext import commands
 
+from bot import blacklist
+
 
 class Fun(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("Fun Cog has been loaded")
+
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
+        if ctx.author.id in blacklist:
+            return
         responses = ["It is certain.",
 
                      "It is decidedly so.",
@@ -57,6 +65,8 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def pvg(self, ctx):
+        if ctx.author.id in blacklist:
+            return
         virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
                      "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
                      "https://cdn.discordapp.com/emojis/737935384297734194.png?v=1",
@@ -72,6 +82,8 @@ class Fun(commands.Cog):
 
     @commands.command(aliases=['2b2tcopypasta'])
     async def _2b2tcopypasta(self, ctx):
+        if ctx.author.id in blacklist:
+            return
         pasta = ["*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i "
                  "joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of "
                  "fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, "
