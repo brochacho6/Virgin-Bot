@@ -54,7 +54,6 @@ async def stats(ctx):
         f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
 
 
-
 # 8ball command
 
 client.remove_command('help')
@@ -68,10 +67,8 @@ async def help(ctx):
         description="Displays the purpose of commands."
     )
 
-    embed.set_author(name="Powered by Virgin Bot™",
-                     icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
-    embed.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+    embed.set_author(name="Powered by Virgin Bot™",icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
     embed.add_field(name="Prefix", value="The prefix for this bot is **$**.", inline=False)
     embed.add_field(name="8ball", value="Ask the 8Ball a question!\nUsage: $8ball [question]", inline=False)
     embed.add_field(name="brownpill", value="Goes Beast-Mode.", inline=False)
@@ -79,8 +76,7 @@ async def help(ctx):
     embed.add_field(name="ping", value="Checks Bot's ping.", inline=False)
     embed.add_field(name="pvg", value="Holy.", inline=False)
     embed.add_field(name="stats", value="Checks the Bot's Statistics.")
-    embed.set_footer(text="Bot Created by brochacho6#4023.",
-                     icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+    embed.set_footer(text="Bot Created by brochacho6#4023.",icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
 
     await ctx.send(embed=embed)
 

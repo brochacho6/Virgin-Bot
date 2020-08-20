@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 
 
-
 class Moderation(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -26,14 +25,16 @@ class Moderation(commands.Cog):
 
             if (user.name, user.discriminator) == (member_name, member_discriminator):
                 await ctx.guild.unban(user)
-                await ctx.send(f'Unbanned {user.mention}')
+                await ctx.send(f'{user.mention} has been unbanned.')
                 return
+
     # unban command
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def kick(ctx, member: discord.Member, *, reason=None):
+    async def kick(self, ctx, member: discord.Member, *, reason=None):
         await member.kick(reason=reason)
+        await ctx.send(f"{member.mention} has been kicked from the server.")
 
     # kick command
 
@@ -44,7 +45,7 @@ class Moderation(commands.Cog):
         await self.client.logout()
 
     @logout.error
-    async def logout_error(self,ctx, error):
+    async def logout_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
             await ctx.send("Hey, you cant do that >:(")
 
@@ -105,7 +106,8 @@ class Moderation(commands.Cog):
         modHelpEmb.add_field(name="kick", value="Kicks mentioned user.\nUsage: `$kick @example`", inline=False)
         modHelpEmb.add_field(name="ban", value="Bans mentioned user.\nUsage: `$ban @example`", inline=False)
         modHelpEmb.add_field(name="unban", value="Unbans user.\nUsage: `$unban example#1234`", inline=False)
-        modHelpEmb.add_field(name="clear", value="Clears messages.\nUsage: `$clear [ammount of messages]`.", inline=False)
+        modHelpEmb.add_field(name="clear", value="Clears messages.\nUsage: `$clear [ammount of messages]`.",
+                             inline=False)
         modHelpEmb.add_field(name="logout",
                              value="Shuts bot down and commands will only become usable again upon a manual restart of the bot.\n⚠️ This command can only be ran by brochacho6. ⚠️",
                              inline=False)
