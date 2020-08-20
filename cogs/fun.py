@@ -55,6 +55,21 @@ class Fun(commands.Cog):
         _8ballEmbed.set_author(name=f'Question: {question}\nAnswer: {random.choice(responses)}')
         await ctx.send(embed=_8ballEmbed)
 
+    @commands.command()
+    async def pvg(self, ctx):
+        virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
+                     "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
+                     "https://cdn.discordapp.com/emojis/737935384297734194.png?v=1",
+                     "https://cdn.discordapp.com/emojis/698308907910562001.png?v=1",
+                     "https://cdn.discordapp.com/emojis/686212562022301734.png?v=1",
+                     "https://cdn.discordapp.com/emojis/697939921557782579.png?v=1",
+                     "https://cdn.discordapp.com/emojis/737935217255514193.png?v=1",
+                     "https://cdn.discordapp.com/emojis/738510553428787262.png?v=1",
+                     "https://cdn.discordapp.com/emojis/737935704642027521.png?v=1",
+                     "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",
+                     "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1", ]
+        await ctx.send(f"{random.choice(virginity)}")
+
 
 
 
