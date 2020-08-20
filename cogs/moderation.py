@@ -7,7 +7,7 @@ class Moderation(commands.Cog):
         self.client = client
 
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason=None):
         await member.ban(reason=reason)
         await ctx.send(f'Banned {member.mention}')
@@ -15,7 +15,7 @@ class Moderation(commands.Cog):
     # ban command
 
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, *, member):
         banned_users = await ctx.guild.bans()
         member_name, member_discriminator = member.split('#')
@@ -96,6 +96,9 @@ class Moderation(commands.Cog):
             title="⚠️ Staff Commands ⚠️",
             description="Displays the purpose of Mod-Only commands."
         )
+
+
+
 
         modHelpEmb.set_author(name="Powered by Virgin Bot™",
                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
