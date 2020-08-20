@@ -22,7 +22,20 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Game(name='Virgin and Proud!'))
 
 
-blacklist = {421444514343944203}
+@client.event
+async def on_guild_join(guild):
+    for channel in guild.text_channels:
+        if channel.permissions_for(guild.me).send_messages:
+            await channel.send(
+                "Hello! Thanks for adding me to your server!\nThis bot was coded by <@322814668445974529> as a "
+                "way to get started in Python.\nTo get started using this bot, this is all you have to "
+                "know!: My command prefix is `$` and to look at my commands, any user can do `$help` and "
+                "to learn moderator commands, do `$modhelp` (note that both the modhelp command and "
+                "moderator commands can only be executed by someone with Administrator permissions.) ")
+        break
+
+
+blacklist = {}
 
 client.blacklisted_users = []
 
@@ -72,7 +85,6 @@ async def stats(ctx):
 
 
 client.remove_command('help')
-
 
 
 @client.command()
