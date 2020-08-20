@@ -16,6 +16,23 @@ async def on_ready():
 
 
 @client.command()
+@commands.is_owner()
+async def load(ctx, extension):
+    client.load_extension(f'cogs.{extension}')
+
+
+@client.command()
+@commands.is_owner()
+async def unload(ctx, extension):
+    client.unload_extension(f'cogs.{extension}')
+
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
+
+
+@client.command()
 @commands.has_permissions(administrator=True)
 async def echo(ctx, *, message=None):
     message = message or "Please provide message to be echo'd"
@@ -91,19 +108,6 @@ async def stats(ctx):
         f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
 
 
-@client.command(aliases=['quit', 'eject'])
-@commands.is_owner()
-async def logout(ctx):
-    await ctx.send(f'Hey {ctx.author.mention}, I am now logging out :wave:')
-    await client.logout()
-
-
-@logout.error
-async def logout_error(ctx, error):
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send("Hey, you cant do that >:(")
-
-
 @client.command()
 async def pvg(ctx):
     virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
@@ -118,7 +122,6 @@ async def pvg(ctx):
                  "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",
                  "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1", ]
     await ctx.send(f"{random.choice(virginity)}")
-
 
 
 @client.command(aliases=['8ball'])
@@ -171,36 +174,6 @@ async def _8ball(ctx, *, question):
 
 # 8ball command
 
-@client.command()
-@commands.has_permissions(kick_members=True)
-async def kick(ctx, member: discord.Member, *, reason=None):
-    await member.kick(reason=reason)
-
-
-# kick command
-
-@client.command()
-@commands.has_permissions(administrator=True)
-async def ban(ctx, member: discord.Member, *, reason=None):
-    await member.ban(reason=reason)
-    await ctx.send(f'Banned {member.mention}')
-
-
-@client.command()
-async def unban(ctx, *, member):
-    banned_users = await ctx.guild.bans()
-    member_name, member_discriminator = member.split('#')
-
-    for ban_entry in banned_users:
-        user = ban_entry.user
-
-        if (user.name, user.discriminator) == (member_name, member_discriminator):
-            await ctx.guild.unban(user)
-            await ctx.send(f'Unbanned {user.mention}')
-            return
-
-
-
 client.remove_command('help')
 
 
@@ -227,33 +200,6 @@ async def help(ctx):
                      icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
 
     await ctx.send(embed=embed)
-
-
-@client.command()
-@commands.has_permissions(administrator=True)
-async def modHelp(ctx):
-    modHelpEmb = discord.Embed(
-        colour=discord.Colour.orange(),
-        title="⚠️ Staff Commands ⚠️",
-        description="Displays the purpose of Mod-Only commands."
-    )
-
-    modHelpEmb.set_author(name="Powered by Virgin Bot™",
-                          icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
-    modHelpEmb.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
-    modHelpEmb.add_field(name="echo", value="Makes the bot say anything you want.\nUsage: `$echo [message]`",
-                         inline=False)
-    modHelpEmb.add_field(name="kick", value="Kicks mentioned user.\nUsage: `$kick @example`", inline=False)
-    modHelpEmb.add_field(name="ban", value="Bans mentioned user.\nUsage: `$ban @example`", inline=False)
-    modHelpEmb.add_field(name="unban", value="Unbans user.\nUsage: `$unban example#1234`", inline=False)
-    modHelpEmb.add_field(name="logout",
-                         value="Shuts bot down and commands will only become usable again upon a manual restart of the bot.\n⚠️ This command can only be ran by brochacho6. ⚠️",
-                         inline=False)
-    modHelpEmb.set_footer(text="Bot Created by brochacho6#4023.",
-                     icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
-
-    await ctx.send(embed=modHelpEmb)
 
 
 client.run('NzQ1NDEwMjk5OTgwNDE1MDI2.XzxXcA.NKasQBtJZL5gor_E0cFDEGHj8Dw')
