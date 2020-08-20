@@ -31,12 +31,8 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
+
 # cog commands
-
-
-
-
-# chat purge command
 
 @client.command()
 async def ping(ctx):
@@ -49,18 +45,6 @@ async def ping(ctx):
 
 
 @client.command()
-async def brownpill(ctx):
-    await ctx.send(
-        f"*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, i guess ill see you on the oldest anarchy server in minecraft history!")
-
-
-@client.command()
-async def clout(ctx):
-    await ctx.send(
-        f"DO YOU HAVE ANY IDEA OF HOW MUCH CLOUT I HAVE? HOW MUCH RELEVANCE FLOWS THROUGH MY VETERAN VEINS? YOU CANT POSSIBLY DENY ME!")
-
-
-@client.command()
 async def stats(ctx):
     pythonVersion = platform.python_version()
     dpyVersion = discord.__version__
@@ -68,22 +52,6 @@ async def stats(ctx):
     memberCount = len(set(client.get_all_members()))
     await ctx.send(
         f"Bot Stats:\nI'm in {serverCount} servers with a total of {memberCount} members. :sunglasses:\nI'm running Python {pythonVersion} and discord.py {dpyVersion}.")
-
-
-@client.command()
-async def pvg(ctx):
-    virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
-                 "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
-                 "https://cdn.discordapp.com/emojis/737935384297734194.png?v=1",
-                 "https://cdn.discordapp.com/emojis/698308907910562001.png?v=1",
-                 "https://cdn.discordapp.com/emojis/686212562022301734.png?v=1",
-                 "https://cdn.discordapp.com/emojis/697939921557782579.png?v=1",
-                 "https://cdn.discordapp.com/emojis/737935217255514193.png?v=1",
-                 "https://cdn.discordapp.com/emojis/738510553428787262.png?v=1",
-                 "https://cdn.discordapp.com/emojis/737935704642027521.png?v=1",
-                 "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1",
-                 "https://cdn.discordapp.com/emojis/745150242558574743.png?v=1", ]
-    await ctx.send(f"{random.choice(virginity)}")
 
 
 @client.command(aliases=['8ball'])
@@ -137,6 +105,8 @@ async def _8ball(ctx, *, question):
 # 8ball command
 
 client.remove_command('help')
+
+
 @client.command()
 async def help(ctx):
     embed = discord.Embed(

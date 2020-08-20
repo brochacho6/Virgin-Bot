@@ -85,6 +85,8 @@ class Moderation(commands.Cog):
     async def on_command_error(self, ctx, error):
         pass
 
+    # clear command
+
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def modHelp(self, ctx):
