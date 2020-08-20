@@ -139,6 +139,7 @@ class Moderation(commands.Cog):
         modHelpEmb.add_field(name="unban", value="Unbans user.\nUsage: `$unban example#1234`", inline=False)
         modHelpEmb.add_field(name="clear", value="Clears messages.\nUsage: `$clear [ammount of messages]`.",
                              inline=False)
+        modHelpEmb.add_field(name="userinfo", value="Tells you a bunch of intel about a user\nUsage: `$userinfo [user]`")
         modHelpEmb.add_field(name="logout",
                              value="Shuts bot down and commands will only become usable again upon a manual restart of the bot.\n⚠️ This command can only be ran by brochacho6. ⚠️",
                              inline=False)

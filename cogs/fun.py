@@ -21,6 +21,7 @@ class Fun(commands.Cog):
         print("Fun Cog has been loaded")
 
     @commands.command(aliases=['8ball'])
+    @cooldown(1, 5, BucketType.user)
     async def _8ball(self, ctx, *, question):
         if ctx.author.id in blacklist:
             return
@@ -70,6 +71,7 @@ class Fun(commands.Cog):
         await ctx.send(embed=_8ballEmbed)
 
     @commands.command()
+    @cooldown(1, 5, BucketType.user)
     async def pvg(self, ctx):
         if ctx.author.id in blacklist:
             return
@@ -87,6 +89,7 @@ class Fun(commands.Cog):
         await ctx.send(f"{random.choice(virginity)}")
 
     @commands.command(aliases=['2b2tcopypasta'])
+    @cooldown(1, 15, BucketType.user)
     async def _2b2tcopypasta(self, ctx):
         if ctx.author.id in blacklist:
             return
@@ -121,6 +124,7 @@ class Fun(commands.Cog):
         await ctx.send(f"{random.choice(pasta)}")
 
     @command(name="slap", aliases=["hit"])
+    @cooldown(1, 5, BucketType.user)
     async def slap_member(self, ctx, member: Member, *, reason: Optional[str] = "for no reason"):
         await ctx.send(f"{ctx.author.display_name} slapped {member.mention} {reason}!")
 
@@ -130,6 +134,7 @@ class Fun(commands.Cog):
             await ctx.send("I can't find that member.")
 
     @command(name="hello", aliases=["hi"])
+    @cooldown(1, 5, BucketType.user)
     async def say_hello(self, ctx):
         await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya'))} {ctx.author.mention}!")
 

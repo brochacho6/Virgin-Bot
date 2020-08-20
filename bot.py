@@ -95,6 +95,9 @@ async def help(ctx):
     embed.add_field(name="2b2tcopypasta", value="Sends a random 2b2t Copypasta.", inline=False)
     embed.add_field(name="pvg", value="Holy.", inline=False)
     embed.add_field(name="stats", value="Checks the Bot's Statistics.")
+    embed.add_field(name="fact", value="Sends random animal fact!\nUsage: `$fact [dog/cat/panda/fox/bird/koala]`")
+    embed.add_field(name="hello", value="Says hi back to you!")
+    embed.add_field(name="slap", value="Slaps someone\nUsage: `$slap [user]`")
     embed.set_footer(text="Bot Created by brochacho6#4023.",
                      icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
 
