@@ -36,40 +36,6 @@ for filename in os.listdir('./cogs'):
 
 
 
-@client.event
-async def on_member_join(member):
-    await member.send(f"Welcome to the Server {member}!")
-
-
-@client.command(aliases=['nuke', 'purge'])
-@commands.has_permissions(manage_messages=True)
-async def clear(ctx, amount: int):
-    await ctx.channel.purge(limit=amount + 1)
-
-    nuke = discord.Embed(
-        colour=discord.Colour.green()
-    )
-    nuke.set_author(name=f'{amount} messages deleted',
-                    icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
-    await ctx.send(embed=nuke)
-
-
-@clear.error
-async def clear_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        nukeError = discord.Embed(
-            colour=discord.Colour.red()
-        )
-        nukeError.set_author(name='Please specify an amount of messages to delete.',
-                             icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
-        await ctx.send(embed=nukeError)
-
-
-@client.event
-async def on_command_error(ctx, error):
-    pass
-
-
 # chat purge command
 
 @client.command()
