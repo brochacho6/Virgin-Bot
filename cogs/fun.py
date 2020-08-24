@@ -9,7 +9,6 @@ from discord.ext.commands import command, cooldown
 import discord
 from discord.ext import commands
 
-from bot import blacklist
 
 
 class Fun(commands.Cog):
@@ -21,10 +20,7 @@ class Fun(commands.Cog):
         print("Fun Cog has been loaded")
 
     @commands.command(aliases=['8ball'])
-    @cooldown(1, 5, BucketType.user)
     async def _8ball(self, ctx, *, question):
-        if ctx.author.id in blacklist:
-            return
         responses = ["It is certain.",
 
                      "It is decidedly so.",
@@ -70,11 +66,18 @@ class Fun(commands.Cog):
         _8ballEmbed.set_author(name=f'Question: {question}\nAnswer: {random.choice(responses)}')
         await ctx.send(embed=_8ballEmbed)
 
+    @_8ball.error
+    async def _8ball_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument ):
+            _8ballError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            _8ballError.set_author(name='Please type a question after the command.',
+                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed= _8ballError)
+
     @commands.command()
-    @cooldown(1, 5, BucketType.user)
     async def pvg(self, ctx):
-        if ctx.author.id in blacklist:
-            return
         virginity = ["https://cdn.discordapp.com/emojis/736080066621997218.png?v=1",
                      "https://cdn.discordapp.com/emojis/717922779659501659.png?v=1",
                      "https://cdn.discordapp.com/emojis/737935384297734194.png?v=1",
@@ -89,10 +92,7 @@ class Fun(commands.Cog):
         await ctx.send(f"{random.choice(virginity)}")
 
     @commands.command(aliases=['2b2tcopypasta'])
-    @cooldown(1, 15, BucketType.user)
     async def _2b2tcopypasta(self, ctx):
-        if ctx.author.id in blacklist:
-            return
         pasta = ["*blows vape cloud* smoke weed every day! are you playing constantiam bro? major cringe. yeah i "
                  "joined 2b2t in 2012. *dabs* ew, youre a rusher? brownpill alert. *flips hair* yeah, ive heard of "
                  "fitmc, but have you heard of pekee of 2b2t? *sneers in disgust* no? bluepill alert. well, "
@@ -124,22 +124,24 @@ class Fun(commands.Cog):
         await ctx.send(f"{random.choice(pasta)}")
 
     @command(name="slap", aliases=["hit"])
-    @cooldown(1, 5, BucketType.user)
     async def slap_member(self, ctx, member: Member, *, reason: Optional[str] = "for no reason"):
         await ctx.send(f"{ctx.author.display_name} slapped {member.mention} {reason}!")
 
     @slap_member.error
-    async def slap_member_error(self, ctx, exc):
-        if isinstance(exc, BadArgument):
-            await ctx.send("I can't find that member.")
+    async def slap_member_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            slapError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            slapError.set_author(name='Please mention a member at the end of the command.',
+                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=slapError)
 
     @command(name="hello", aliases=["hi"])
-    @cooldown(1, 5, BucketType.user)
     async def say_hello(self, ctx):
         await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya'))} {ctx.author.mention}!")
 
     @command(name="fact")
-    @cooldown(3, 60, BucketType.guild)
     async def animal_fact(self, ctx, animal: str):
         if (animal := animal.lower()) in ("dog", "cat", "panda", "fox", "bird", "koala"):
             fact_url = f"https://some-random-api.ml/facts/{animal}"
@@ -162,7 +164,7 @@ class Fun(commands.Cog):
                                   colour=ctx.author.colour)
                     if image_link is not None:
                         embed.set_author(name="Powered by some-random-api.ml",
-                                              icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+                                         icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
                         embed.set_image(url=image_link)
                     await ctx.send(embed=embed)
 
@@ -171,6 +173,44 @@ class Fun(commands.Cog):
 
         else:
             await ctx.send("No facts are available for that animal.")
+    @animal_fact.error
+    async def animaL_fact_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            factError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            factError.set_author(name='Please type one ouf of these at the end of the command: dog, cat, panda, fox, bird, koala',
+                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=factError)
+
+
+    @commands.command(aliases=["pat"])
+    async def headpat(self, ctx, member: Member):
+        headpats = ["https://tenor.com/view/good-boy-pat-on-head-stitch-gif-14742401",
+                    "https://tenor.com/view/anime-head-pat-anime-head-rub-neko-anime-love-anime-gif-16121044",
+                    "https://tenor.com/view/rikka-head-pat-pat-on-head-anime-rikka-gif-13911345",
+                    "https://tenor.com/view/anime-pet-gif-9200932",
+                    "https://tenor.com/view/kanna-kamui-pat-head-pat-gif-12018819",
+                    "https://tenor.com/view/pat-head-loli-dragon-anime-gif-9920853",
+                    "https://tenor.com/view/nagi_no_asukara-nagi-manaka-head-pat-gif-8841561",
+                    "https://tenor.com/view/head-pat-anime-kawaii-neko-nyaruko-gif-15735895",
+                    "https://tenor.com/view/pat-head-good-job-anime-gif-15471762",
+                    "https://tenor.com/view/head-pat-its-okay-anime-gif-17863262",
+                    "https://tenor.com/view/anime-friends-hug-imiss-this-head-pat-gif-17841335"]
+
+
+        await ctx.send(f"{ctx.author.mention} headpatted {member.mention}!\n {random.choice(headpats)}")
+
+    @headpat.error
+    async def headpat_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            patError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            patError.set_author(name='Please mention a member at the end of the command.',
+                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=patError)
+
 
 def setup(client):
     client.add_cog(Fun(client))

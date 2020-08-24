@@ -1,17 +1,7 @@
-import random
 import platform
-
-import ctx as ctx
 import discord
 import os
-import asyncio
-
-from discord import user
 from discord.ext import commands
-from pathlib import Path
-import json
-import logging
-from pip._vendor.pep517.compat import read_json
 
 client = commands.Bot(command_prefix='$', case_insensitive=True, owner_id=322814668445974529)
 
@@ -35,11 +25,6 @@ async def on_guild_join(guild):
         break
 
 
-blacklist = {}
-
-client.blacklisted_users = []
-
-
 @client.command()
 @commands.is_owner()
 async def load(ctx, extension):
@@ -61,9 +46,6 @@ for filename in os.listdir('./cogs'):
 
 @client.command()
 async def ping(ctx):
-    if ctx.author.id in blacklist:
-        return
-
     pingEmbed = discord.Embed(
         colour=discord.Colour.red()
     )
@@ -74,8 +56,6 @@ async def ping(ctx):
 
 @client.command()
 async def stats(ctx):
-    if ctx.author.id in blacklist:
-        return
     pythonVersion = platform.python_version()
     dpyVersion = discord.__version__
     serverCount = len(client.guilds)
@@ -89,8 +69,6 @@ client.remove_command('help')
 
 @client.command()
 async def help(ctx):
-    if ctx.author.id in blacklist:
-        return
     embed = discord.Embed(
         colour=discord.Colour.red(),
         title="Commands",
@@ -100,16 +78,17 @@ async def help(ctx):
     embed.set_author(name="Powered by Virgin Bot™",
                      icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
     embed.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+        url="https://cdn.discordapp.com/attachments/744916487801929811/747543601927422013/74a.jpg")
     embed.add_field(name="Prefix", value="The prefix for this bot is **$**.", inline=False)
     embed.add_field(name="8ball", value="Ask the 8Ball a question!\nUsage: $8ball [question]", inline=False)
     embed.add_field(name="ping", value="Checks Bot's ping.", inline=False)
     embed.add_field(name="2b2tcopypasta", value="Sends a random 2b2t Copypasta.", inline=False)
     embed.add_field(name="pvg", value="Holy.", inline=False)
-    embed.add_field(name="stats", value="Checks the Bot's Statistics.")
-    embed.add_field(name="fact", value="Sends random animal fact!\nUsage: `$fact [dog/cat/panda/fox/bird/koala]`")
-    embed.add_field(name="hello", value="Says hi back to you!")
-    embed.add_field(name="slap", value="Slaps someone\nUsage: `$slap [user]`")
+    embed.add_field(name="stats", value="Checks the Bot's Statistics.", inline=False)
+    embed.add_field(name="fact", value="Sends random animal fact!\nUsage: `$fact [dog/cat/panda/fox/bird/koala]`",
+                    inline=False)
+    embed.add_field(name="hello", value="Says hi back to you!", inline=False)
+    embed.add_field(name="slap", value="Slaps someone\nUsage: `$slap [user]`", inline=False)
     embed.set_footer(text="Bot Created by brochacho6#4023.",
                      icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
 

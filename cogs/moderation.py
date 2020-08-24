@@ -26,6 +26,16 @@ class Moderation(commands.Cog):
         await channel.send(embed=embed)
         print(f"{ctx.author.name} banned: {member.name}")
 
+    @ban.error
+    async def ban_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            banError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            banError.set_author(name="Please mention a person at the end of the command.",
+                                 icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=banError)
+
     # ban command
 
     @commands.command()
@@ -49,6 +59,16 @@ class Moderation(commands.Cog):
                 print(f"{ctx.author.name} unbanned: {member.name}")
                 return
 
+    @unban.error
+    async def unban_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            unbanError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            unbanError.set_author(name="Please add the person's discord user at the end of the command. ($unban Example#1234)",
+                                 icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=unbanError)
+
     # unban command
 
     @commands.command()
@@ -65,18 +85,39 @@ class Moderation(commands.Cog):
         await channel.send(embed=embed)
         print(f"{ctx.author.name} kicked: {member.name}")
 
+    @kick.error
+    async def kick_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            kickError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            kickError.set_author(name='Please mention a person at the end of the command.',
+                                 icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=kickError)
+
     # kick command
 
     @commands.command(aliases=['quit', 'eject'])
     @commands.is_owner()
     async def logout(self, ctx):
-        await ctx.send(f'Hey {ctx.author.mention}, I am now logging out :wave:')
+        logError = discord.Embed(
+            colour=discord.Colour.red()
+        )
+        logError.set_author(name=f'Hey {ctx.author.mention}, I am now logging out :wave:',
+                           icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+        await ctx.send(embed=logError)
+
         await self.client.logout()
 
     @logout.error
     async def logout_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
-            await ctx.send("Hey, you cant do that >:(")
+            exError = discord.Embed(
+                colour=discord.Colour.red()
+            )
+            exError.set_author(name="Hey, you can't do that >:^(",
+                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            await ctx.send(embed=exError)
 
     # logout command
 
@@ -131,7 +172,7 @@ class Moderation(commands.Cog):
         modHelpEmb.set_author(name="Powered by Virgin Bot™",
                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
         modHelpEmb.set_thumbnail(
-            url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+            url="https://cdn.discordapp.com/attachments/744916487801929811/747543601927422013/74a.jpg")
         modHelpEmb.add_field(name="echo", value="Makes the bot say anything you want.\nUsage: `$echo [message]`",
                              inline=False)
         modHelpEmb.add_field(name="kick", value="Kicks mentioned user.\nUsage: `$kick @example`", inline=False)

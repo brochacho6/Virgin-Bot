@@ -11,7 +11,11 @@ class Info(Cog):
     def __init__(self, client):
         self.client = client
 
-    @command(name="userinfo", aliases=["memberinfo", "ui", "mi"])
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("Info Cog has been loaded")
+
+    @command(name="userinfo", aliases=["memberinfo", "ui", "mi", "info"])
     @commands.has_permissions(administrator=True)
     async def user_info(self, ctx, target: Optional[Member]):
         target = target or ctx.author
@@ -21,7 +25,7 @@ class Info(Cog):
                       timestamp=datetime.utcnow())
 
         embed.set_author(name="Powered by Virgin Bot™",
-                              icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+                         icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
         embed.set_thumbnail(url=target.avatar_url)
 
         fields = [("Name", str(target), True),
@@ -49,7 +53,6 @@ class Info(Cog):
 
         embed.set_thumbnail(url=ctx.guild.icon_url)
 
-
         statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
                     len(list(filter(lambda m: str(m.status) == "idle", ctx.guild.members))),
                     len(list(filter(lambda m: str(m.status) == "dnd", ctx.guild.members))),
@@ -74,14 +77,7 @@ class Info(Cog):
         for name, value, inline in fields:
             embed.add_field(name=name, value=value, inline=inline)
 
-
-
         await ctx.send(embed=embed)
-
-    @Cog.listener()
-    async def on_ready(self):
-        if not self.client.ready:
-            self.client.cogs_ready.ready_up("info")
 
 
 def setup(client):
