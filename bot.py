@@ -1,3 +1,4 @@
+import datetime
 import platform
 import discord
 import os
@@ -91,6 +92,7 @@ async def help(ctx):
     embed.add_field(name="slap", value="Slaps someone\nUsage: `$slap [user]`", inline=False)
     embed.set_footer(text="Bot Created by brochacho6#4023.",
                      icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
+    embed.timestamp = datetime.datetime.utcnow()
 
     await ctx.send(embed=embed)
 

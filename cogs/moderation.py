@@ -1,3 +1,5 @@
+import datetime
+
 import cogs as cogs
 import discord
 from discord.ext import commands
@@ -23,6 +25,7 @@ class Moderation(commands.Cog):
             title=f"{ctx.author.name} banned: {member.name}",
             description=reason
         )
+        embed.timestamp = datetime.datetime.utcnow()
         await channel.send(embed=embed)
         print(f"{ctx.author.name} banned: {member.name}")
 
@@ -55,6 +58,7 @@ class Moderation(commands.Cog):
                 embed = discord.Embed(
                     title=f"{ctx.author.name} unbanned: {member.name}",
                 )
+                embed.timestamp = datetime.datetime.utcnow()
                 await channel.send(embed=embed)
                 print(f"{ctx.author.name} unbanned: {member.name}")
                 return
@@ -82,6 +86,7 @@ class Moderation(commands.Cog):
             title=f"{ctx.author.name} kicked: {member.name}",
             description=reason
         )
+        embed.timestamp = datetime.datetime.utcnow()
         await channel.send(embed=embed)
         print(f"{ctx.author.name} kicked: {member.name}")
 
@@ -105,6 +110,7 @@ class Moderation(commands.Cog):
         )
         logError.set_author(name=f'Hey {ctx.author.mention}, I am now logging out :wave:',
                            icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+        logError.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=logError)
 
         await self.client.logout()
@@ -140,6 +146,7 @@ class Moderation(commands.Cog):
         )
         nuke.set_author(name=f'{amount} messages deleted',
                         icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+        nuke.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=nuke)
 
     @clear.error
@@ -186,7 +193,7 @@ class Moderation(commands.Cog):
                              inline=False)
         modHelpEmb.set_footer(text="Bot Created by brochacho6#4023.",
                               icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745438993361010768/IMG_20200812_183924.jpg")
-
+        modHelpEmb.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=modHelpEmb)
     # mod help command
 

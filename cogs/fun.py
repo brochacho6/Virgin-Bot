@@ -8,6 +8,7 @@ from discord.ext.commands import BadArgument
 from discord.ext.commands import command, cooldown
 import discord
 from discord.ext import commands
+import datetime
 
 
 
@@ -64,6 +65,7 @@ class Fun(commands.Cog):
             colour=discord.Colour.red()
         )
         _8ballEmbed.set_author(name=f'Question: {question}\nAnswer: {random.choice(responses)}')
+        _8ballEmbed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=_8ballEmbed)
 
     @_8ball.error
@@ -181,6 +183,7 @@ class Fun(commands.Cog):
             )
             factError.set_author(name='Please type one ouf of these at the end of the command: dog, cat, panda, fox, bird, koala',
                                icon_url="https://cdn.discordapp.com/attachments/744916487801929811/745424638795972728/firefox_6Zw1KYZS2b.png")
+            factError.timestamp = datetime.datetime.utcnow()
             await ctx.send(embed=factError)
 
 
