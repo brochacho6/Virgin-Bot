@@ -3,6 +3,7 @@ import platform
 import discord
 import os
 from discord.ext import commands
+from discord.utils import get
 
 client = commands.Bot(command_prefix='$', case_insensitive=True, owner_id=322814668445974529)
 
@@ -63,6 +64,38 @@ async def stats(ctx):
     memberCount = len(set(client.get_all_members()))
     await ctx.send(
         f"Bot Stats:\nI'm in **{serverCount}** servers with a total of **{memberCount}** members.\nI'm running Python **{pythonVersion}** and discord.py **{dpyVersion}**.")
+
+@client.command()
+@commands.has_permissions(manage_roles=True)
+async def mute(ctx, member : discord.Member):
+    guild = ctx.guild
+
+    for role in guild.roles:
+        if role.name == "Muted":
+            await member.add_roles(role)
+            await ctx.send(f"{member.mention} has been muted.")
+            return
+
+            overwrite = discord.PermissionsOverwrite(send_messages = False)
+            newRole = await guild.create_role(name="Muted")
+
+            for channel in guild.text_channels:
+                await channel.set_permissions(newRole, overwrite=overwrite)
+            await member.add_roles(newRole)
+            await ctx.send(f"{member.mention} has been muted.")
+
+@client.command()
+@commands.has_permissions(manage_roles=True)
+async def unmute(ctx, member : discord.Member):
+    guild = ctx.guild
+
+    for role in guild.roles:
+        if role.name=="Muted":
+            await  member.remove_roles(role)
+            await ctx.send(f"{member.mention} has been unmuted.")
+            return
+
+
 
 
 client.remove_command('help')
