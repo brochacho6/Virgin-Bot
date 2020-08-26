@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import datetime
+import json
 
 
 # In cogs we make our own class
@@ -58,6 +59,8 @@ class Events(commands.Cog):
             await ctx.send("Hey! You lack permission to use this command.")
         raise error
 
+
+    
 
 def setup(client):
     client.add_cog(Events(client))

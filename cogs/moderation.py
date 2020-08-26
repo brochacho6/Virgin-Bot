@@ -1,5 +1,5 @@
 import datetime
-
+import json
 import cogs as cogs
 import discord
 from discord.ext import commands
@@ -40,6 +40,8 @@ class Moderation(commands.Cog):
             await ctx.send(embed=banError)
 
     # ban command
+
+
 
     @commands.command()
     @commands.has_permissions(ban_members=True)

@@ -2,13 +2,26 @@ import datetime
 import platform
 import discord
 import os
-
+import json
 from discord.ext import commands
 from discord.utils import get
 
 
+def get_prefix(client,message):
+    if not message.guild:
+        return commands.when_mentioned_or("$")(client, message)
 
-client = commands.Bot(command_prefix='$', case_insensitive=True, owner_id=322814668445974529)
+    with open("prefixes.json", "r") as f:
+        prefixes = json.load(f)
+
+    if str(message.guild.id) not in prefixes:
+        return commands.when_mentioned_or("$")(client, message)
+
+    prefix = prefixes[str(message.guild.id)]
+    return commands.when_mentioned_or(prefix)(client, message)
+
+client = commands.Bot(command_prefix=get_prefix, case_insensitive=True, owner_id=322814668445974529)
+
 
 
 @client.event
