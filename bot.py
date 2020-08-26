@@ -130,4 +130,4 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-client.run('NzQ1NDEwMjk5OTgwNDE1MDI2.XzxXcA.NKasQBtJZL5gor_E0cFDEGHj8Dw')
+client.run('NzQ4MTc0MzQyNjUwNzI0NDQy.X0Zlpw.XYXM_LqKdi0sd7daAgA5FWGcFqs')
