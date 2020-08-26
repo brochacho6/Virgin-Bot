@@ -164,7 +164,30 @@ class Moderation(commands.Cog):
         pass
 
 
-    # clear command
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(administrator=True)
+    @commands.bot_has_guild_permissions(manage_channels=True)
+    async def lockdown(self, ctx, channel: discord.TextChannel=None):
+        channel = channel or ctx.channel
+
+        if ctx.guild.default_role not in channel.overwrites:
+            overwrites = {
+            ctx.guild.default_role: discord.PermissionOverwrite(send_messages=False)
+            }
+            await channel.edit(overwrites=overwrites)
+            await ctx.send(f"```I have put {channel.name} on lockdown.```")
+        elif channel.overwrites[ctx.guild.default_role].send_messages == True or channel.overwrites[ctx.guild.default_role].send_messages == None:
+            overwrites = channel.overwrites[ctx.guild.default_role]
+            overwrites.send_messages = False
+            await channel.set_permissions(ctx.guild.default_role, overwrite=overwrites)
+            await ctx.send(f"I have put `{channel.name}` on lockdown.")
+        else:
+            overwrites = channel.overwrites[ctx.guild.default_role]
+            overwrites.send_messages = True
+            await channel.set_permissions(ctx.guild.default_role, overwrite=overwrites)
+            await ctx.send(f"I have removed `{channel.name}` from lockdown.")
+
 
 
 
@@ -182,12 +205,14 @@ class Moderation(commands.Cog):
         modHelpEmb.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/744916487801929811/747543601927422013/74a.jpg")
         modHelpEmb.add_field(name="echo", value="Makes the bot say anything you want.\nUsage: `$echo [message]`",
-                             inline=False)
-        modHelpEmb.add_field(name="kick", value="Kicks mentioned user.\nUsage: `$kick @example`", inline=False)
-        modHelpEmb.add_field(name="ban", value="Bans mentioned user.\nUsage: `$ban @example`", inline=False)
-        modHelpEmb.add_field(name="unban", value="Unbans user.\nUsage: `$unban example#1234`", inline=False)
+                             )
+        modHelpEmb.add_field(name="kick", value="Kicks mentioned user.\nUsage: `$kick @example`", )
+        modHelpEmb.add_field(name="ban", value="Bans mentioned user.\nUsage: `$ban @example`", )
+        modHelpEmb.add_field(name="unban", value="Unbans user.\nUsage: `$unban example#1234`", )
         modHelpEmb.add_field(name="clear", value="Clears messages.\nUsage: `$clear [ammount of messages]`.",
-                             inline=False)
+                             )
+        modHelpEmb.add_field(name="mute", value="Mutes a person.\nUsage; `$mute [user]`")
+        modHelpEmb.add_field(name="lockdown", value="Makes it so its not possible to send messages in the channel")
         modHelpEmb.add_field(name="userinfo", value="Tells you a bunch of intel about a user\nUsage: `$userinfo [user]`")
         modHelpEmb.add_field(name="logout",
                              value="Shuts bot down and commands will only become usable again upon a manual restart of the bot.\n⚠️ This command can only be ran by brochacho6. ⚠️",

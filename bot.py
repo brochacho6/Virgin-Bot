@@ -2,8 +2,11 @@ import datetime
 import platform
 import discord
 import os
+
 from discord.ext import commands
 from discord.utils import get
+
+
 
 client = commands.Bot(command_prefix='$', case_insensitive=True, owner_id=322814668445974529)
 
@@ -95,7 +98,43 @@ async def unmute(ctx, member : discord.Member):
             await ctx.send(f"{member.mention} has been unmuted.")
             return
 
+###voice commands only###
 
+@client.command(pass_context=True)
+async def join(ctx):
+    global voice
+    channel = ctx.message.author.voice.channel
+    voice = get(client.voice_clients, guild = ctx.guild)
+
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await channel.connect()
+
+    await voice.disconnect()
+
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await  channel.connect()
+
+    await ctx.send(f"Joined `{channel}`.")
+
+@client.command(pass_context=True)
+async def leave(ctx):
+    channel = ctx.message.author.voice.channel
+    voice = get(client.voice_clients, guild=ctx.guild)
+
+    if leave and voice.is_connected():
+        await voice.disconnect()
+        print(f"The Bot left {channel}")
+        await ctx.send(f"I have left `{channel}`.")
+    else:
+        print("Bot was not in a voice channel")
+        await ctx.send("I'm not in any voice channels.")
+
+
+###voice commands only###
 
 
 client.remove_command('help')
@@ -131,3 +170,4 @@ async def help(ctx):
 
 
 client.run('NzQ4MTc0MzQyNjUwNzI0NDQy.X0Zlpw.XYXM_LqKdi0sd7daAgA5FWGcFqs')
+#remember to replace the token when pushing to heroku
