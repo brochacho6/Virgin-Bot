@@ -12,13 +12,13 @@ class Events2(commands.Cog):
     @commands.command()
     @commands.check(is_guild_owner)
     async def prefix(self, ctx, *, pre):
-        with open(r"C:\Users\gcpsa\PycharmProjects\Virgin-Bot\prefixes.json", "r") as f:
+        with open(r"prefixes.json", "r") as f:
             prefixes = json.load(f)
 
         prefixes[str(ctx.guild.id)] = pre
         await ctx.send(f"New prefix is `{pre}`")
 
-        with open(r"C:\Users\gcpsa\PycharmProjects\Virgin-Bot\prefixes.json", "w") as f:
+        with open(r"prefixes.json", "w") as f:
             json.dump(prefixes, f, indent=4)
 
 

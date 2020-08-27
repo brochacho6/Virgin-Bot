@@ -19,14 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1d80826-168f-4abe-b382-31eb566ddeba" name="Default Changelist" comment="lockdown added EZ">
-      <change afterPath="$PROJECT_DIR$/cogs/events2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prefixes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cogs/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/cogs/events.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cogs/moderation.py" beforeDir="false" afterPath="$PROJECT_DIR$/cogs/moderation.py" afterDir="false" />
-    </list>
+    <list default="true" id="e1d80826-168f-4abe-b382-31eb566ddeba" name="Default Changelist" comment="costumizable prefixes added EZ" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -130,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598483025525</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="costumizable prefixes added EZ">
+      <created>1598486194157</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1598486194157</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,33 +151,34 @@
     <MESSAGE value="idk anymore" />
     <MESSAGE value="this will now be the experimental version of virgin bot" />
     <MESSAGE value="lockdown added EZ" />
-    <option name="LAST_COMMIT_MESSAGE" value="lockdown added EZ" />
+    <MESSAGE value="costumizable prefixes added EZ" />
+    <option name="LAST_COMMIT_MESSAGE" value="costumizable prefixes added EZ" />
   </component>
   <component name="WindowStateProjectService">
     <state x="445" y="154" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598403922249">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="445" y="154" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598403922249" />
-    <state width="1339" height="172" key="GridCell.Tab.0.bottom" timestamp="1598485909204">
+    <state width="1339" height="172" key="GridCell.Tab.0.bottom" timestamp="1598486737501">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1339" height="172" key="GridCell.Tab.0.bottom/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598485909204" />
-    <state width="1339" height="172" key="GridCell.Tab.0.center" timestamp="1598485909203">
+    <state width="1339" height="172" key="GridCell.Tab.0.bottom/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598486737501" />
+    <state width="1339" height="172" key="GridCell.Tab.0.center" timestamp="1598486737500">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1339" height="172" key="GridCell.Tab.0.center/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598485909203" />
-    <state width="1339" height="172" key="GridCell.Tab.0.left" timestamp="1598485909203">
+    <state width="1339" height="172" key="GridCell.Tab.0.center/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598486737500" />
+    <state width="1339" height="172" key="GridCell.Tab.0.left" timestamp="1598486737500">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1339" height="172" key="GridCell.Tab.0.left/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598485909203" />
-    <state width="1339" height="172" key="GridCell.Tab.0.right" timestamp="1598485909204">
+    <state width="1339" height="172" key="GridCell.Tab.0.left/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598486737500" />
+    <state width="1339" height="172" key="GridCell.Tab.0.right" timestamp="1598486737501">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1339" height="172" key="GridCell.Tab.0.right/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598485909204" />
-    <state x="272" y="93" key="Vcs.Push.Dialog.v2" timestamp="1598483036986">
+    <state width="1339" height="172" key="GridCell.Tab.0.right/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598486737501" />
+    <state x="272" y="93" key="Vcs.Push.Dialog.v2" timestamp="1598486407870">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state x="272" y="93" key="Vcs.Push.Dialog.v2/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598483036986" />
+    <state x="272" y="93" key="Vcs.Push.Dialog.v2/0.0.1360.728/-1600.0.1600.860@0.0.1360.728" timestamp="1598486407870" />
     <state x="343" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1598485060551">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
