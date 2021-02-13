@@ -182,5 +182,5 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-client.run('NzQ4MTc0MzQyNjUwNzI0NDQy.X0Zlpw.XYXM_LqKdi0sd7daAgA5FWGcFqs')
-#remember to replace the token when pushing to heroku
+client.run('TOKEN')
+#put token here
