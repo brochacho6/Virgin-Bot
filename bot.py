@@ -111,7 +111,7 @@ async def unmute(ctx, member : discord.Member):
             await ctx.send(f"{member.mention} has been unmuted.")
             return
 
-###voice commands only###
+# voice commands only
 
 @client.command(pass_context=True)
 async def join(ctx):
@@ -147,7 +147,7 @@ async def leave(ctx):
         await ctx.send("I'm not in any voice channels.")
 
 
-###voice commands only###
+# voice commands only
 
 
 client.remove_command('help')
@@ -183,4 +183,4 @@ async def help(ctx):
 
 
 client.run('TOKEN')
-#put token here
+# put token here
